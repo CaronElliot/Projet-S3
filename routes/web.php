@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('accueil');
 
 
 Route::get('/enonce', function () {
     return view('enonce.index');
 });
+
+Route::get('/test',[\App\Http\Controllers\HomeController::class,'jeu'])->name('test');
+
 
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 
