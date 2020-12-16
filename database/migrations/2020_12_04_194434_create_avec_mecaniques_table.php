@@ -16,7 +16,7 @@ class CreateAvecMecaniquesTable extends Migration
         Schema::create('avec_mecaniques', function (Blueprint $table) {
             $table->unsignedBigInteger('mecanique_id');
             $table->unsignedBigInteger('jeu_id');
-            $table->foreign('jeu_id')->references('id')->on('jeux')
+            $table->foreign('jeu_id')->references('id')->on('games')
                 ->onDelete('cascade');
             $table->foreign('mecanique_id')->references('id')->on('mecaniques')
                 ->onDelete('cascade');

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jeu;
+use App\Models\Editeur;
+use App\Models\Theme;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Jeu;
 
 class JeuController extends Controller
 {
@@ -26,9 +30,12 @@ class JeuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        $themes = Theme::all();
+        $editeurs = Editeur::all();
+
+        return view('games.create',['themes'=>$themes,'editeurs'=>$editeurs]);
     }
 
     /**
@@ -37,9 +44,25 @@ class JeuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $validatedData = $request->validate([
+            'nom' => 'required|unique:smartphones|max:50',
+            'description' => 'required',
+            'editeur' => 'required',
+            'theme' => 'required',
+        ]);
+        $jeu = new Jeu();
+        $editeur = Editeur::findById($request->editeur);
+        $theme = Theme::findById($request->theme);
+
+        $jeu->nom = $request->nom;
+        $jeu->description = $request->description;
+        $jeu->editeur=$editeur;
+        $jeu->theme=$theme;
+
+        $jeu->save();
+
+        return redirect()->route('jeu.index');
     }
 
     /**
