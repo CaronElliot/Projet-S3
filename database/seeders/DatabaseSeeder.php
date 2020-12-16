@@ -54,5 +54,17 @@ class DatabaseSeeder extends Seeder {
             $jeu->save();
         }
         Commentaire::factory(100)->create();
+        Jeu::factory()->create([
+            'nom' => 'Monopoly Star-Wars',
+            'regles' => 'Etre le dernier joueur à avoir de l\'argent.',
+            'langue' => 'Fr',
+            'url_media' => null,
+            'nombre_joueurs' => 4,
+            'theme_id' => 12,
+            'duree' => '2h30',
+            'description' => 'Un super jeu',
+            'user_id' => 1,
+            'editeur_id' => 4,
+        ]);
     }
 }
