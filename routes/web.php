@@ -23,7 +23,6 @@ Route::get('/enonce', function () {
 
 Route::get('/test',[\App\Http\Controllers\HomeController::class,'jeu'])->name('test');
 
-
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
