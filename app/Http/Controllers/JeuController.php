@@ -26,26 +26,26 @@ class JeuController extends Controller
     public function index(Request $request)
     {
         $jeux = Jeu::all();
-        $editeurs=Editeur::all();
-        $themes=Theme::all();
-        $mecaniques=Mecanique::all();
-        if($request->tri == "oui") {
+        $editeurs = Editeur::all();
+        $themes = Theme::all();
+        $mecaniques = Mecanique::all();
+        if ($request->tri == "oui") {
             $jeux = Jeu::orderBy('nom')->get();
         }
-        if(isset($request->editeur)){
-            $jeux=Jeu::all()->where('editeur_id',$request->editeur);
+        if (isset($request->editeur)) {
+            $jeux = Jeu::all()->where('editeur_id', $request->editeur);
         }
-        if(isset($request->theme)){
-            $jeux=Jeu::all()->where('theme_id',$request->theme);
+        if (isset($request->theme)) {
+            $jeux = Jeu::all()->where('theme_id', $request->theme);
         }
-        if(isset($request->mecanique)){
-            $mecanique_id=$request->mecanique;
-            $jeux=Jeu::whereHas('mecaniques',function ($q) use($mecanique_id){
-                $q->where('id',$mecanique_id);
+        if (isset($request->mecanique)) {
+            $mecanique_id = $request->mecanique;
+            $jeux = Jeu::whereHas('mecaniques', function ($q) use ($mecanique_id) {
+                $q->where('id', $mecanique_id);
             })->get();
 
         }
-        return view("games.index", ['data' => $jeux,'editeurs' =>$editeurs,'themes' =>$themes,'mecaniques'=>$mecaniques]);
+        return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques]);
     }
 
     /**
@@ -57,23 +57,24 @@ class JeuController extends Controller
     {
         $themes = Theme::all();
         $editeurs = Editeur::all();
-        $mecaniques= Mecanique::all();
+        $mecaniques = Mecanique::all();
 
-        return view('games.create',['themes'=>$themes,'editeurs'=>$editeurs,'mecaniques'=>$mecaniques]);
+        return view('games.create', ['themes' => $themes, 'editeurs' => $editeurs, 'mecaniques' => $mecaniques]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'nom' => 'required',
             'description' => 'required',
-            'regles'=>'required',
-            'langue'=>'required',
+            'regles' => 'required',
+            'langue' => 'required',
             'url_media',
             'age',
             'nombre_joueurs',
@@ -84,7 +85,7 @@ class JeuController extends Controller
             'mecanique',
         ]);
         $jeu = new Jeu();
-        $jeu->user_id=Auth::id();
+        $jeu->user_id = Auth::id();
 
 
         $jeu->nom = $request->nom;
@@ -94,13 +95,13 @@ class JeuController extends Controller
         $jeu->url_media = $request->url_media;
         $jeu->age = $request->age;
         $jeu->nombre_joueurs = $request->nombre_joueurs;
-        $jeu->duree=$request->duree;
+        $jeu->duree = $request->duree;
         $jeu->categorie = $request->categorie;
         $jeu->editeur_id = $request->editeur;
-        $jeu->theme_id=$request->theme;
+        $jeu->theme_id = $request->theme;
         $jeu->save();
 
-        $mecaniques=Mecanique::findMany($request->mecanique)->pluck('id');
+        $mecaniques = Mecanique::findMany($request->mecanique)->pluck('id');
         $jeu->mecaniques()->attach($mecaniques);
         $jeu->save();
 
@@ -111,24 +112,36 @@ class JeuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $r)
     {
         $jeu = Jeu::find($id);
-        $commentaires = Commentaire::all()->where('jeu_id',$id);
-        if($r->tri == "oui") {
-            $commentaires = Commentaire::orderBy('date_com','desc')->where('jeu_id',$id)->get();
-    }
+        $commentaires = Commentaire::all()->where('jeu_id', $id);
+        $moyenne = 0;
+        $max = 0;
+        $min = 0;
+        $nbUsersJeu = 0;
+        $nbUsers = 0;
+        if ($r->tri == "oui") {
+            $commentaires = Commentaire::orderBy('date_com', 'desc')->where('jeu_id', $id)->get();
+        }
+        if ($r->triggerinfo == "oui") {
+            $moyenne = DB::table('achats')->where('jeu_id', $id)->avg('prix');
+            $max = DB::table('achats')->where('jeu_id', $id)->max('prix');
+            $min = DB::table('achats')->where('jeu_id', $id)->min('prix');
+            $nbUsersJeu = DB::table('achats')->where('jeu_id', $id)->count('prix');
+            $nbUsers = DB::table('users')->count('id');
+        }
 
-        return view('games.show', ['data' => $jeu,'commentaires'=>$commentaires]);
+        return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires,'moyenne'=>$moyenne,'max'=>$max,'min'=>$min,'nbUsersJeu'=>$nbUsersJeu,'nbUsers'=>$nbUsers]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -139,8 +152,8 @@ class JeuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -151,7 +164,7 @@ class JeuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -159,28 +172,31 @@ class JeuController extends Controller
         //
     }
 
-    public function regles($id){
+    public function regles($id)
+    {
         $jeu = Jeu::find($id);
         return view('games.regles', ['jeu' => $jeu]);
     }
 
-    public function commentaire(Request $r){
+    public function commentaire(Request $r)
+    {
 
-        $comm=new Commentaire();
+        $comm = new Commentaire();
         $comm->commentaire = $r->commentaire;
         $comm->user_id = Auth::id();
-        $comm->date_com=Carbon::now();
-        $comm->note=$r->Note;
-        $comm->jeu_id=$r->idJeu;
+        $comm->date_com = Carbon::now();
+        $comm->note = $r->Note;
+        $comm->jeu_id = $r->idJeu;
         $comm->save();
 
-        return redirect()->route('jeu.show',['jeu'=>$r->idJeu]);
+        return redirect()->route('jeu.show', ['jeu' => $r->idJeu]);
     }
 
 
-    public function profil(){
-        $user_id=Auth::id();
-        $user =User::find($user_id);
-        return view('games.profil',['user'=>$user]);
+    public function profil()
+    {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        return view('games.profil', ['user' => $user]);
     }
 }
