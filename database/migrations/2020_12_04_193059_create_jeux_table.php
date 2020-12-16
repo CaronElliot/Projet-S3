@@ -13,7 +13,7 @@ class CreateJeuxTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('jeux', function (Blueprint $table) {
             $table->id();
             $table->string('nom', 100);
             $table->text('description');

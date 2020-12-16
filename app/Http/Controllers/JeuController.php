@@ -77,14 +77,12 @@ class JeuController extends Controller
         $jeu->categorie = $request->categorie;
         $jeu->editeur_id = $request->editeur;
         $jeu->theme_id=$request->theme;
-        $mecaniques=Mecanique::all()->where('nom',$request->mecanique)->pluck('id');
-        $jeu->mecaniques()->attach($mecaniques);
-
         $jeu->save();
 
-        foreach($mecaniques as $meca){
-            $meca->jeux()->attach($jeu->id);
-        }
+        $mecaniques=Mecanique::findMany($request->mecanique)->pluck('id');
+        $jeu->mecaniques()->attach($mecaniques);
+        $jeu->save();
+
 
         return redirect()->route('jeu.index');
     }

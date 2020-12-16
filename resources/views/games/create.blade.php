@@ -103,7 +103,7 @@
                         <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Mécaniques</label>
                         <div class="flex-shrink w-full inline-block relative">
                             @foreach($mecaniques as $mecanique)
-                                <input type="checkbox" id="{{$mecanique->id}}" name="mecanique[]" value="{{$mecanique->nom}}">
+                                <input type="checkbox" id="{{$mecanique->id}}" name="mecanique[]" value="{{$mecanique->id}}">
                                 <label for="{{$mecanique->nom}}"> {{$mecanique->nom}}</label>
                                 <br/>
                             @endforeach
