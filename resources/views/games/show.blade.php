@@ -27,6 +27,7 @@
                             @if(!empty($data->nombre_joueurs))
                                 <li class="list-group-item">{{$data->nombre_joueurs}} joueurs</li>
                             @endif
+                            <a href="{{ route('jeu.regles', ['id' => $data->id]) }}">Règles du jeu</a>
                         </ul>
                     </div>
                 </div>

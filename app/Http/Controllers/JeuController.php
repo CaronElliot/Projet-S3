@@ -113,4 +113,9 @@ class JeuController extends Controller
     {
         //
     }
+
+    public function regles($id){
+        $jeu = Jeu::find($id);
+        return view('games.regles', ['jeu' => $jeu]);
+    }
 }

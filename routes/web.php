@@ -30,3 +30,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
+
+Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'regles', ])->name('jeu.regles');
