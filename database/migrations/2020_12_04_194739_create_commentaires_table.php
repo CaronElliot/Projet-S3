@@ -20,7 +20,7 @@ class CreateCommentairesTable extends Migration
             $table->integer('note')->default(0);
             $table->unsignedBigInteger('jeu_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('jeu_id')->references('id')->on('games')
+            $table->foreign('jeu_id')->references('id')->on('jeux')
                 ->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
