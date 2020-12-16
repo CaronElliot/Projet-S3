@@ -12,9 +12,12 @@
 </head>
 <body>
 @if(!empty($jeux))
-@foreach($jeux as $j)
-    <x-jeux : id="$j"></x-jeux>
-@endforeach
+    <div class="container">
+        @foreach($jeux as $j)
+            <x-jeux :id="$j->id"></x-jeux>
+        @endforeach
+    </div>
+
 @endif
 
 </body>
