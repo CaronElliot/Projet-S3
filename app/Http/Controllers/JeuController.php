@@ -114,10 +114,13 @@ class JeuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $r)
     {
         $jeu = Jeu::find($id);
         $commentaires = Commentaire::all()->where('jeu_id',$id);
+        if($r->tri == "oui") {
+            $commentaires = Commentaire::orderBy('date_com','desc')->where('jeu_id',$id)->get();
+    }
 
         return view('games.show', ['data' => $jeu,'commentaires'=>$commentaires]);
     }
@@ -169,12 +172,11 @@ class JeuController extends Controller
         $comm->date_com=Carbon::now();
         $comm->note=$r->Note;
         $comm->jeu_id=$r->idJeu;
-
         $comm->save();
-
 
         return redirect()->route('jeu.show',['jeu'=>$r->idJeu]);
     }
+
 
     public function profil(){
         $user_id=Auth::id();
