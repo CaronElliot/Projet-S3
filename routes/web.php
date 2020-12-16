@@ -23,6 +23,7 @@ Route::get('/enonce', function () {
 
 Route::get('/test',[\App\Http\Controllers\HomeController::class,'jeu'])->name('test');
 Route::match(['post'], '/commentaire',[\App\Http\Controllers\JeuController::class,'commentaire'])->name('commentaire');
+Route::post('/ajouterAchat', [\App\Http\Controllers\JeuController::class, 'ajouterAchat'])->name('ajouterAchat');
 
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 
