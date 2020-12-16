@@ -7,7 +7,8 @@ use App\Models\Editeur;
 use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Jeu;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JeuController extends Controller
 {
@@ -46,19 +47,21 @@ class JeuController extends Controller
      */
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'nom' => 'required|unique:smartphones|max:50',
+            'nom' => 'required',
             'description' => 'required',
             'editeur' => 'required',
             'theme' => 'required',
         ]);
         $jeu = new Jeu();
-        $editeur = Editeur::findById($request->editeur);
-        $theme = Theme::findById($request->theme);
+        $jeu->user_id=Auth::id();
+
+        $editeur = DB::table('editeurs')->where('nom',$request->editeur)->pluck('id');
+        $theme = DB::table('themes')->where('nom',$request->theme)->pluck('id');
 
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
-        $jeu->editeur=$editeur;
-        $jeu->theme=$theme;
+        $jeu->editeur_id=$request->editeur;
+        $jeu->theme_id=$request->theme;
 
         $jeu->save();
 
@@ -74,7 +77,7 @@ class JeuController extends Controller
     public function show($id)
     {
         $jeu = Jeu::find($id);
-        return view("games.show", ['data' => $jeu]);
+        return view('games.show', ['data' => $jeu]);
     }
 
     /**

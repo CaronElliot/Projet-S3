@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Jeu extends Model {
     use HasFactory;
 
-    protected $table = 'games';
+    protected $table = 'jeux';
     public $timestamps = false;
 
     protected $fillable = ['nom', 'description', 'regles', 'langue',
