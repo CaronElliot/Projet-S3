@@ -30,12 +30,30 @@
                             <a href="{{ route('jeu.regles', ['id' => $data->id]) }}">Règles du jeu</a>
                         </ul>
                     </div>
+                        @auth
+                    <div class="card-footer">
+                        <form action="{{route('jeu.commentaire',['jeu'=>$data->id])}}" method="POST" name="formulaire">
+                            Votre note
+                            <input type="radio" name="Note" value="1"> 1
+                            <input type="radio" name="Note" value="2"> 2
+                            <input type="radio" name="Note" value="3"> 3
+                            <input type="radio" name="Note" value="4"> 4
+                            <input type="radio" name="Note" value="5"> 5 <br>
+                            <input type="submit" value="Envoyer">
+
+                            <input
+                                class='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500'
+                                id='grid-text-1' name="commentaire" value="{{ old('commentaire') }}" placeholder='Saisir votre commentaire'>
+                        </form>
+
+                    </div>
+                        @endauth
                 </div>
             </div>
         </div>
 </div>
 @endif
-</div>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

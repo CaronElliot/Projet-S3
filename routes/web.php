@@ -23,6 +23,7 @@ Route::get('/enonce', function () {
 
 Route::get('/test',[\App\Http\Controllers\HomeController::class,'jeu'])->name('test');
 
+Route::match(['post'],'/jeu', [\App\Http\Controllers\JeuController::class, 'commentaire'])->name('jeu.commentaire');
 
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 

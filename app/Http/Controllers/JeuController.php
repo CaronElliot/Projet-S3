@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
 use App\Models\Jeu;
 use App\Models\Editeur;
+use App\Models\Mecanique;
 use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class JeuController extends Controller
 {
@@ -20,10 +24,26 @@ class JeuController extends Controller
     public function index(Request $request)
     {
         $jeux = Jeu::all();
+        $editeurs=Editeur::all();
+        $themes=Theme::all();
+        $mecaniques=Mecanique::all();
         if($request->tri == "oui") {
             $jeux = Jeu::orderBy('nom')->get();
         }
-        return view("games.index", ['data' => $jeux]);
+        if(isset($request->editeur)){
+            $jeux=Jeu::all()->where('editeur_id',$request->editeur);
+        }
+        if(isset($request->theme)){
+            $jeux=Jeu::all()->where('theme_id',$request->theme);
+        }
+        if(isset($request->mecanique)){
+            $mecanique_id=$request->mecanique;
+            $jeux=Jeu::whereHas('mecaniques',function ($q) use($mecanique_id){
+                $q->where('id',$mecanique_id);
+            })->get();
+
+        }
+        return view("games.index", ['data' => $jeux,'editeurs' =>$editeurs,'themes' =>$themes,'mecaniques'=>$mecaniques]);
     }
 
     /**
@@ -118,4 +138,10 @@ class JeuController extends Controller
         $jeu = Jeu::find($id);
         return view('games.regles', ['jeu' => $jeu]);
     }
+
+    public function commentaire($id){
+        return redirect()->route('jeu.show',['jeu'=>$id]);
+    }
+
+
 }

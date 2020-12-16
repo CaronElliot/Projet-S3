@@ -10,6 +10,45 @@
 
 <body>
     <a href="{{ route('jeu.index', ['tri' => 'oui']) }}" class="btn btn-outline-secondary">Trier</a>
+    <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
+        <select name="editeur"
+                class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+            <option value="">Choisir un éditeur</option>
+            @foreach($editeurs as $editeur)
+                <option value="{{$editeur->id}}">{{$editeur->nom}}</option>
+            @endforeach
+        </select>
+        <button
+            class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3"
+            type="submit">Valider
+        </button>
+    </form>
+    <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
+        <select name="theme"
+                class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+            <option value="">Choisir un thème</option>
+            @foreach($themes as $theme)
+                <option value="{{$theme->id}}">{{$theme->nom}}</option>
+            @endforeach
+        </select>
+        <button
+            class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3"
+            type="submit">Valider
+        </button>
+    </form>
+    <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
+        <select name="mecanique"
+                class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+            <option value="">Choisir une mécanique</option>
+            @foreach($mecaniques as $mecanique)
+                <option value="{{$mecanique->id}}">{{$mecanique->nom}}</option>
+            @endforeach
+        </select>
+        <button
+            class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3"
+            type="submit">Valider
+        </button>
+    </form>
     <div class="container">
         @if(!empty($data))
             <div class="row">
