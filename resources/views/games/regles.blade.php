@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <title>Marathon du Web 2020- IUT de Lens</title>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex">
-    <!-- http://usewing.ml -->
-    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
-</head>
+@extends('base')
 
-<body>
+@section('body')
     @if(!empty($jeu))
         <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-12 mx-auto my-3">
@@ -30,6 +22,4 @@
             </div>
         </div>
     @endif
-</body>
-
-</html>
+@endsection

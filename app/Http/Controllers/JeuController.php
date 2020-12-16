@@ -137,4 +137,10 @@ class JeuController extends Controller
         $jeu = Jeu::find($id);
         return view('games.regles', ['jeu' => $jeu]);
     }
+
+    public function profil(){
+        $user_id=Auth::id();
+        $user =User::find($user_id);
+        return view('games.profil',['user'=>$user]);
+    }
 }
