@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container-full">
     @if(!empty($data))
         <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-12 mx-auto my-3">
