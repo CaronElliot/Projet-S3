@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Commentaire;
+use App\Models\Editeur;
 use App\Models\Jeu;
 use App\Models\Mecanique;
+use App\Models\Theme;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -17,6 +19,7 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
+        $faker = Factory::create('fr_FR');
         User::factory()->create([
             'name' => 'Robert Duchmol',
             'email' => 'robert.duchmol@domain.fr',
@@ -32,10 +35,11 @@ class DatabaseSeeder extends Seeder {
                 UsersSeeder::class,
             ]
         );
-        $faker = Factory::create('fr_FR');
         $jeux = Jeu::factory(50)->create();
         $mecanisque_ids = Mecanique::all()->pluck('id');
         $user_ids = User::all()->pluck('id');
+        $theme_ids = Theme::all()->pluck('id');
+        $editeurs_ids = Editeur::all()->pluck('id');
         foreach ($jeux as $jeu) {
             $nbMecs = $faker->numberBetween(1, 3);
             $mecs = $faker->randomElements($mecanisque_ids, $nbMecs);
@@ -55,16 +59,16 @@ class DatabaseSeeder extends Seeder {
         }
         Commentaire::factory(100)->create();
         Jeu::factory()->create([
-            'nom' => 'Monopoly Star-Wars',
+            'nom' => 'Monopoly',
             'regles' => 'Etre le dernier joueur à avoir de l\'argent.',
             'langue' => 'Fr',
             'url_media' => null,
             'nombre_joueurs' => 4,
-            'theme_id' => 12,
             'duree' => '2h30',
             'description' => 'Un super jeu',
-            'user_id' => 1,
-            'editeur_id' => 4,
+            'theme_id' => $faker->randomElement($theme_ids),
+            'user_id' => $faker->randomElement($user_ids),
+            'editeur_id' => $faker->randomElement($editeurs_ids),
         ]);
     }
 }

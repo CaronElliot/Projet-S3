@@ -55,8 +55,9 @@ class JeuController extends Controller
     {
         $themes = Theme::all();
         $editeurs = Editeur::all();
+        $mecaniques= Mecanique::all();
 
-        return view('games.create',['themes'=>$themes,'editeurs'=>$editeurs]);
+        return view('games.create',['themes'=>$themes,'editeurs'=>$editeurs,'mecaniques'=>$mecaniques]);
     }
 
     /**
@@ -69,21 +70,38 @@ class JeuController extends Controller
         $validatedData = $request->validate([
             'nom' => 'required',
             'description' => 'required',
+            'regles'=>'required',
+            'langue'=>'required',
+            'url_media',
+            'age',
+            'nombre_joueurs',
+            'duree',
+            'categorie',
             'editeur' => 'required',
             'theme' => 'required',
+            'mecanique',
         ]);
         $jeu = new Jeu();
         $jeu->user_id=Auth::id();
 
-        $editeur = DB::table('editeurs')->where('nom',$request->editeur)->pluck('id');
-        $theme = DB::table('themes')->where('nom',$request->theme)->pluck('id');
 
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
-        $jeu->editeur_id=$request->editeur;
+        $jeu->regles = $request->regles;
+        $jeu->langue = $request->langue;
+        $jeu->url_media = $request->url_media;
+        $jeu->age = $request->age;
+        $jeu->nombre_joueurs = $request->nombre_joueurs;
+        $jeu->duree=$request->duree;
+        $jeu->categorie = $request->categorie;
+        $jeu->editeur_id = $request->editeur;
         $jeu->theme_id=$request->theme;
-
         $jeu->save();
+
+        $mecaniques=Mecanique::findMany($request->mecanique)->pluck('id');
+        $jeu->mecaniques()->attach($mecaniques);
+        $jeu->save();
+
 
         return redirect()->route('jeu.index');
     }
