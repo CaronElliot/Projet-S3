@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <a href="{{ route('jeu.index', ['tri' => 'oui']) }}" class="btn btn-outline-secondary">Trier</a>
     <div class="container">
         @if(!empty($data))
             <div class="row">

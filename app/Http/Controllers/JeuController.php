@@ -12,9 +12,12 @@ class JeuController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $jeux = Jeu::all();
+        if($request->tri == "oui") {
+            $jeux = Jeu::orderBy('nom')->get();
+        }
         return view("games.index", ['data' => $jeux]);
     }
 
