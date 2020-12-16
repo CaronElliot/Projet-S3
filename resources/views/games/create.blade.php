@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <title>Marathon du Web 2020- IUT de Lens</title>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex">
-    <!-- http://usewing.ml -->
-    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
-</head>
+@extends('base')
 
-<body>
+@section('body')
     <div class="bg-gray-200 min-h-screen pt-2 font-mono my-16">
         <div class="container mx-auto">
             <div class="inputs w-full max-w-2xl p-6 mx-auto">
@@ -143,4 +135,4 @@
             </div>
         </div>
     </div>
-</body>
+@endsection
