@@ -181,6 +181,20 @@ class JeuController extends Controller
     public function profil(){
         $user_id=Auth::id();
         $user =User::find($user_id);
-        return view('games.profil',['user'=>$user]);
+        $jeux=Jeu::all();
+        return view('games.profil',['user'=>$user, 'jeux' => $jeux]);
+    }
+
+    public function ajouterAchat(Request $r){
+        $jeu=Jeu::find($r->jeu);
+
+        $jeu->acheteurs()->attach(Auth::id(), [
+            'lieu' => $r->lieu,
+            'prix' => $r->prix,
+            'date_achat' => $r->date_achat]);
+
+        $jeu->save();
+
+        return redirect()->route('profil');
     }
 }
