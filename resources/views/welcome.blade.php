@@ -27,10 +27,10 @@
     @endif
 </div>
 
-<a href="{{route('test')}}">machin</a>
+<a href="{{route('test')}}">Carte des jeux</a>
 
 @auth
-<a href="{{route('accueil')}}">truc</a>
+<a href="{{route('accueil')}}">Choix de 5 jeux aléatoires</a>
 
 
 @if(!empty($data))

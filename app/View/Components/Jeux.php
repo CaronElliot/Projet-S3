@@ -13,9 +13,9 @@ class Jeux extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id)
     {
-
+        $this->id=$id;
     }
 
 
@@ -27,6 +27,7 @@ class Jeux extends Component
      */
     public function render()
     {
-        return view('components.jeu');
+        $j=Jeu::find($this->id);
+        return view('components.jeu',['j'=>$j]);
     }
 }
