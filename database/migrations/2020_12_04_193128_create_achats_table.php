@@ -16,7 +16,7 @@ class CreateAchatsTable extends Migration
         Schema::create('achats', function (Blueprint $table) {
             $table->unsignedBigInteger('jeu_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('jeu_id')->references('id')->on('games')
+            $table->foreign('jeu_id')->references('id')->on('jeux')
                 ->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
