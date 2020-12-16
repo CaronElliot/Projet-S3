@@ -157,8 +157,8 @@ class JeuController extends Controller
         return view('games.regles', ['jeu' => $jeu]);
     }
 
-    public function commentaire($id){
-        return redirect()->route('jeu.show',['jeu'=>$id]);
+    public function commentaire(Request $r){
+        return redirect()->route('jeu.show',['jeu'=>$r->idJeu]);
     }
 
 

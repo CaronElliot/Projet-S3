@@ -32,13 +32,15 @@
                     </div>
                         @auth
                     <div class="card-footer">
-                        <form action="{{route('jeu.commentaire',['jeu'=>$data->id])}}" method="POST" name="formulaire">
+                        <form action="{{route('commentaire')}}" method="POST" name="formulaire">
+                            @csrf
                             Votre note
                             <input type="radio" name="Note" value="1"> 1
                             <input type="radio" name="Note" value="2"> 2
                             <input type="radio" name="Note" value="3"> 3
                             <input type="radio" name="Note" value="4"> 4
                             <input type="radio" name="Note" value="5"> 5 <br>
+                            <input name="idJeu" type="hidden" value="{{$data->id}}">
                             <input type="submit" value="Envoyer">
 
                             <input
