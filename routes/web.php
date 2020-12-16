@@ -22,6 +22,8 @@ Route::get('/enonce', function () {
     return view('enonce.index');
 });
 
+Route::get('/jeux', [\App\Http\Controllers\JeuController::class, 'index']);
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

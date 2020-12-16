@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jeu;
 use Illuminate\Http\Request;
 
 class JeuController extends Controller
@@ -9,11 +10,12 @@ class JeuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $jeux = Jeu::all();
+        return view("games.index", ['data' => $jeux]);
     }
 
     /**
