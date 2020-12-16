@@ -42,8 +42,29 @@
                                 </form>
                             </div>
                         @endauth
+                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
+                               class="btn btn-outline-secondary">Infos tarifaires</a>
+                            @if(!empty($moyenne))
+                            <div>
+                                <ul style="padding: 0">
+                                    <li class="list-group-item">Moyenne : {{$moyenne}}<br>
+                                    </li>
+                                    <li class="list-group-item">Max : {{$max}}<br>
+                                    </li>
+                                    <li class="list-group-item">Min : {{$min}}<br>
+                                    </li>
+                                    <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}<br>
+                                    </li>
+                                    <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            @endif
+
                         @if(!empty($commentaires))
-                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}" class="btn btn-outline-secondary">Trier</a>
+                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}"
+                               class="btn btn-outline-secondary">Trier</a>
                             <div>
                                 <ul style="padding: 0">
                                     @foreach($commentaires as $comm)
@@ -54,7 +75,6 @@
                                 </ul>
                             </div>
                         @endif
-
                     </div>
                 </div>
             </div>
