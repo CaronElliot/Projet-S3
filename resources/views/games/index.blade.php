@@ -28,7 +28,7 @@
                                     @if(!empty($s->nombre_joueurs))
                                         <li class="list-group-item">{{$s->nombre_joueurs}} joueurs</li>
                                     @endif
-                                    <li class="list-group-item"><a href="#" class="btn btn-outline-primary">Voir le jeu</a></li>
+                                    <li class="list-group-item"><a href="{{ route('jeu.show', ['jeu' => $s->id]) }}" class="btn btn-outline-primary">Voir le jeu</a></li>
                                 </ul>
                             </div>
                         </div>
