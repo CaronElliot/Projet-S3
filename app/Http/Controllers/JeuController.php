@@ -8,6 +8,8 @@ use App\Models\Editeur;
 use App\Models\Mecanique;
 use App\Models\Theme;
 use App\Models\User;
+use Carbon\Carbon;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -115,7 +117,9 @@ class JeuController extends Controller
     public function show($id)
     {
         $jeu = Jeu::find($id);
-        return view('games.show', ['data' => $jeu]);
+        $commentaires = Commentaire::all()->where('jeu_id',$id);
+
+        return view('games.show', ['data' => $jeu,'commentaires'=>$commentaires]);
     }
 
     /**
@@ -158,6 +162,17 @@ class JeuController extends Controller
     }
 
     public function commentaire(Request $r){
+
+        $comm=new Commentaire();
+        $comm->commentaire = $r->commentaire;
+        $comm->user_id = Auth::id();
+        $comm->date_com=Carbon::now();
+        $comm->note=$r->Note;
+        $comm->jeu_id=$r->idJeu;
+
+        $comm->save();
+
+
         return redirect()->route('jeu.show',['jeu'=>$r->idJeu]);
     }
 
