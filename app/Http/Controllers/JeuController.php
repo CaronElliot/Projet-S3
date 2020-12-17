@@ -148,11 +148,16 @@ class JeuController extends Controller
             $minCom = DB::table('commentaires')->where('jeu_id', $id)->min('note');
             $nbCommJeu = DB::table('commentaires')->where('jeu_id', $id)->count('note');
             $nbComm = DB::table('commentaires')->count('id');
-            $classementListe=DB::select(DB::raw("SELECT avg(note), jeu_id FROM commentaires GROUP BY jeu_id ORDER BY avg(note)"));
-            $classement=array_search($id,$classementListe);
-            if ($classement===false) $classement=0;
+            $classementListe= DB::select("SELECT avg(note), jeu_id FROM commentaires GROUP BY jeu_id ORDER BY avg(note) DESC");
+            for($i = 0; $i < count($classementListe); $i++) {
+                if(print_r($classementListe[$i]->jeu_id, true) == $id) {
+                    $classement = $i + 1;
+                    break;
+                } else {
+                    $classement = 0;
+                }
+            }
         }
-
         return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires,'moyCom'=>$moyCom,'maxCom'=>$maxCom,'minCom'=>$minCom,'nbCommJeu'=>$nbCommJeu,'nbComm'=>$nbComm,'classement'=>$classement,
         'moyPrix'=>$moyPrix,'maxPrix'=>$maxPrix,'minPrix'=>$minPrix,'nbUsersJeu'=>$nbUsersJeu,'nbUsers'=>$nbUsers]);
     }
