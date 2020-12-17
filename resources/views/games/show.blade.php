@@ -42,9 +42,9 @@
                                 </form>
                             </div>
                         @endauth
-                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerstats'=>'oui']) }}"
-                               class="btn btn-outline-secondary">Infos statistiques</a>
-                            @if(!empty($moyCom))
+                        <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerstats'=>'oui']) }}"
+                           class="btn btn-outline-secondary">Infos statistiques</a>
+                        @if(!empty($moyCom))
                             <div>
                                 <ul style="padding: 0">
                                     <li class="list-group-item">Moyenne : {{$moyCom}}<br>
@@ -62,43 +62,73 @@
 
                                 </ul>
                             </div>
-                            @endif
-                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
-                               class="btn btn-outline-secondary">Infos tarifaires</a>
-                            @if(!empty($moyPrix))
+                        @endif
+                        <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
+                           class="btn btn-outline-secondary">Infos tarifaires</a>
+                        @if($maxPrix!=0)
+                            <div class="mt-2 mx-2">
                                 <div>
-                                    <ul style="padding: 0">
-                                        <li class="list-group-item">Moyenne : {{$moyPrix}}<br>
-                                        </li>
-                                        <li class="list-group-item">Max : {{$maxPrix}}<br>
-                                        </li>
-                                        <li class="list-group-item">Min : {{$minPrix}}<br>
-                                        </li>
-                                        <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}<br>
-                                        </li>
-                                        <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
-                                        </li>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100"
+                                             aria-valuemin="0" aria-valuemax="100"
+                                             style="width: 100%;"></div>
+                                    </div>
+                                    <div style="margin-left: {{(($moyPrix/$maxPrix)*100)-1}}%;">
+                                        <img src="{{url('./images/fleche.gif')}}" width="20px" class="img-fluid">
+                                        {{$moyPrix}}
+                                    </div>
 
-                                    </ul>
                                 </div>
-                            @endif
-
-                        @if(!empty($commentaires))
-                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}"
-                               class="btn btn-outline-secondary">Trier</a>
-                            <div>
-                                <ul style="padding: 0">
-                                    @foreach($commentaires as $comm)
-                                        <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
-                                            : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br> Note (sur
-                                            5) : {{$comm->note}} </li>
-                                    @endforeach
-                                </ul>
                             </div>
+
+
+                            <div>
+                                <div style="float: left;">Min</div>
+                                <div style="float: right;">Max</div>
+                            </div>
+
                         @endif
                     </div>
+                    @if(!empty($moyPrix))
+                        <div>
+                            <ul style="padding: 0">
+                                <li class="list-group-item">Moyenne : {{$moyPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Max : {{$maxPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Min : {{$minPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Nombre d'utilisateurs possédant le jeu
+                                    : {{$nbUsersJeu}}
+                                    <div class="progress-circle" data-value="40">
+
+                                    </div>
+                                    <br>
+                                </li>
+                                <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
+                                </li>
+
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if(!empty($commentaires))
+                        <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}"
+                           class="btn btn-outline-secondary">Trier</a>
+                        <div>
+                            <ul style="padding: 0">
+                                @foreach($commentaires as $comm)
+                                    <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
+                                        : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br> Note
+                                        (sur
+                                        5) : {{$comm->note}} </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
-        @endif
+    </div>
+    @endif
     </div>
 @endsection
