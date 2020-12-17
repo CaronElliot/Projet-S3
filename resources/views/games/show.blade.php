@@ -64,7 +64,6 @@
                                             </li>
                                             <li class="list-group-item">Classement du jeu dans son thème : {{$classement}}<br>
                                             </li>
-
                                         </ul>
                                     </div>
                                     @endif
