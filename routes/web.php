@@ -33,7 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'regles'])->name('jeu.regles');
+Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'regles'])->name( 'jeu.regles');
 
 Route::get('/profil',[\App\Http\Controllers\JeuController::class,'profil'])->name('profil');
 

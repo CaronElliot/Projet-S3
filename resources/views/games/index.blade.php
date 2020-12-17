@@ -53,7 +53,7 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{$s->nom}}</h5>
                                 <ul class="list-group list-group-flush text-center">
-                                    <li class="list-group-item">{{$s->theme->nom}}</li>
+
                                     @if(!empty($s->duree))
                                         <li class="list-group-item">{{$s->duree}} minutes</li>
                                     @endif
@@ -66,6 +66,32 @@
                         </div>
                     </div>
                 @endforeach
+                <div>
+                    <form action="{{route('jeu.index')}}" method="GET">
+                        <button type="submit" name="pagination" value="15"
+                                class=" bg-white text-red-500 px-2 py-2 rounded-md ">
+                            15
+                        </button>
+                        <button type="submit" name="pagination" value="20"
+                                class=" bg-white text-red-500 px-2 py-2 rounded-md ">
+                            20
+                        </button>
+                        <button type="submit" name="pagination" value="25"
+                                class=" bg-white text-red-500 px-2 py-2 rounded-md ">
+                            25
+                        </button>
+                        @if($data->currentpage()!=1)
+                            <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())-1, 'pagination' => $pagination])}}">
+                                Précédent
+                            </a>
+                        @endif
+                        @if($data->currentpage()<$data->lastPage())
+                            <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())+1, 'pagination' => $pagination])}}">
+                                Suivant
+                            </a>
+                        @endif
+                    </form>
+                </div>
             </div>
         @endif
     </div>
