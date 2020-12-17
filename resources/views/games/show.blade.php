@@ -9,6 +9,7 @@
                                 @if(!empty($data->url_media))
                                     <img src={{$data->url_media}} alt="" class="card-img-top">
                                 @endif
+<<<<<<< HEAD
                                 <div class="card-body">
                                     <h5 class="card-title text-center nom-jeu-vert">{{$data->nom}}</h5>
                                     <ul class="list-group list-group-flush text-center">
@@ -53,6 +54,20 @@
                                     <div>
                                         <ul style="padding: 0">
                                             <li class="list-group-item">Moyenne : {{$moyCom}}<br>
+                                                @if(100-(($moyCom/5)*100) < ($moyCom/5)*100)
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 100%;
+                                                            background: rgb(190,49,49);
+                                                            background: linear-gradient(90deg, rgba(190,49,49,1) 0%, rgba(59,179,48,1) {{100-(($moyCom/5)*100)}}%);" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                @endif
+                                                @if(100-(($moyCom/5)*100) > ($moyCom/5)*100)
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 100%;
+                                                            background: rgb(190,49,49);
+                                                            background: linear-gradient(90deg, rgba(190,49,49,1) {{100-(($moyCom/5)*100)}}%, rgba(59,179,48,1) 100%);" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                @endif
                                             </li>
                                             <li class="list-group-item">Max : {{$maxCom}}<br>
                                             </li>
@@ -69,6 +84,7 @@
                                     @endif
                                     <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
                                        class="btn btn-orange-outline">Infos tarifaires</a>
+
                                     @if(!empty($moyPrix))
                                         <div class="mt-2 mx-2">
                                             <div>
@@ -79,10 +95,14 @@
                                                 </div>
                                                 <div style="margin-left: {{(($moyPrix/$maxPrix)*100)-1}}%;">
                                                     <img src="{{url('./images/fleche.gif')}}" width="20px" class="img-fluid">
-                                                    {{$moyPrix}}
+                                                    {{round($moyPrix,2)}}
                                                 </div>
 
                                             </div>
+                                        </div>
+                                        <div>
+                                            <div style="float: left;">Min</div>
+                                            <div style="float: right;">Max</div>
                                         </div>
                                         <div>
                                             <ul style="padding: 0">
@@ -93,6 +113,12 @@
                                                 <li class="list-group-item">Min : {{$minPrix}}<br>
                                                 </li>
                                                 <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}<br>
+                                                    <div class="progress-circle" data-value="{{round($nbUsersJeu/$nbUsers*100,2)}}">
+                                                        <div class="progress-masque">
+                                                            <div class="progress-barre"></div>
+                                                            <div class="progress-sup50"></div>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                                 <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
                                                 </li>
@@ -134,5 +160,6 @@
                         {{--</div>--}}
                     </div>
             @endif
+
     </div>
 @endsection
