@@ -36,11 +36,27 @@
                 <option value="{{$mecanique->id}}">{{$mecanique->nom}}</option>
             @endforeach
         </select>
+        <input
+            class='appearance-none block w-full bg-white text-gray-600 border border-gray-400 shadow-inner rounded-md py-2 px-4 leading-tight focus:outline-none  focus:border-gray-500'
+            id='grid-text-1' name="nbJoueurs" value="{{ old('nbJoueurs') }}" placeholder='Saisir le nombre de joueurs'
+            >
+        <input
+            class='appearance-none block w-full bg-white text-gray-600 border border-gray-400 shadow-inner rounded-md py-2 px-4 pr-0 leading-tight focus:outline-none  focus:border-gray-500'
+            id='grid-text-1' name="duree" value="{{ old('duree') }}" placeholder="Saisir la durée de jeu"
+        >
+        <select name="langue"
+                class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+            <option value="">Choisir une langue</option>
+            <option value="Fr">Français</option>
+            <option value="En">Anglais</option>
+        </select>
         <button
             class="appearance-none bg-gray-200 text-gray-900 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3"
             type="submit">Valider
         </button>
     </form>
+
+
     <div class="container">
         @if(!empty($data))
             <div class="row">

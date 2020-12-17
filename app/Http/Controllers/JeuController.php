@@ -48,7 +48,17 @@ class JeuController extends Controller
             $jeux = Jeu::whereHas('mecaniques', function ($q) use ($mecanique_id) {
                 $q->where('id', $mecanique_id);
             })->get();
-        }
+
+            if (isset($request->langue)) {
+                $jeux = $jeux->where('langue', $request->langue);
+            }
+            if (isset($request->duree)) {
+                $jeux = $jeux->where('duree', $request->duree);
+            }
+            if (isset($request->langue)) {
+                $jeux = $jeux->where('langue', $request->langue);
+            }
+    }
         return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques, 'pagination' => $pagination]);
     }
 
