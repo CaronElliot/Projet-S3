@@ -14,9 +14,11 @@
             <a class="navbar-brand" href="{{route('login')}}">Login</a>
             <a class="navbar-brand" href="{{route('register')}}">Register</a>
             @endguest
+                <a class="navbar-brand mx-auto d-block" href="{{route('accueil')}}"><img src="{{url('./images/GAMEBOOST.png')}}" width="120px" class="img-fluid"></a>
             @auth
                 <a class="navbar-brand" href="{{route('profil')}}">Profil</a>
             @endauth
+
         </nav>
     </header>
 

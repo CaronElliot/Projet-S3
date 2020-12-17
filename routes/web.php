@@ -37,3 +37,5 @@ Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'reg
 
 Route::get('/profil',[\App\Http\Controllers\JeuController::class,'profil'])->name('profil');
 
+Route::get('/logout',[\App\Http\Controllers\LoginController::class,'logout'])->name('logout');
+

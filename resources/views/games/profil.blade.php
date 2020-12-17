@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('body')
+    <body>
     <div class="container">
         <br>
         <div class="row">
@@ -53,13 +54,14 @@
             <form action="{{route('ajouterAchat')}}" method="POST" name="formulaireAjoutAchat">
                 @csrf
                 <div class='w-full md:w-full px-3 mb-6'>
-                    <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Ajouter un jeu</label>
+                    <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Ajouter un
+                        jeu</label>
                     <div class="flex-shrink w-full inline-block relative">
-                        <select name="jeu"  value="{{ old('jeu') }}"
+                        <select name="jeu" value="{{ old('jeu') }}"
                                 class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
                             <option>Choisir le jeu à ajouter</option>
                             @foreach($jeux as $j)
-                                <option value="{{$j->id}}"  @if($j == old('j')) selected @endif>{{$j->nom}}</option>
+                                <option value="{{$j->id}}" @if($j == old('j')) selected @endif>{{$j->nom}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -70,7 +72,8 @@
                            for='grid-text-1'>Date d'achat</label>
                     <input
                         class='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500'
-                        id='grid-text-1' name="date_achat" value="{{ old('date_achat') }}" placeholder="aaaa-mm-jj hh:mm:ss"
+                        id='grid-text-1' name="date_achat" value="{{ old('date_achat') }}"
+                        placeholder="aaaa-mm-jj hh:mm:ss"
                         required>
                 </div>
                 <br>
@@ -100,5 +103,14 @@
                 </div>
             </form>
         </div>
+        <form method="POST" action="http://127.0.0.1:8000/logout">
+            <input type="hidden" name="_token" value="eeusNEokZ2pFyMx2S2iA0oO645NLSHM8nCw1Hat6">
+            <a class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+               href="{{route('logout')}}">Logout</a>
+
+        </form>
     </div>
+    </body>
 @endsection
+
+
