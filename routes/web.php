@@ -27,6 +27,8 @@ Route::post('/ajouterAchat', [\App\Http\Controllers\JeuController::class, 'ajout
 
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 
+Route::delete('/supprimerAchat', [\App\Http\Controllers\JeuController::class, 'supprimerAchat'])->name('supprimerAchat');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -34,3 +36,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'regles'])->name('jeu.regles');
 
 Route::get('/profil',[\App\Http\Controllers\JeuController::class,'profil'])->name('profil');
+

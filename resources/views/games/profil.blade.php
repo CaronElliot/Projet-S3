@@ -10,6 +10,44 @@
                 Email de l'utilisateur : {{$user->email}}
             </p>
         </div>
+        @if(!empty($jeuxUser))
+            <div>
+                @foreach($jeuxUser as $s)
+                    <div class="col-lg-3 col-md-4 col-sm-12 mx-auto my-3">
+                        <div class="card shadow-sm">
+                            @if(!empty($s->url_media))
+                                <img src={{$s->url_media}} alt="" class="card-img-top">
+                            @endif
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{$s->nom}}</h5>
+                                <ul class="list-group list-group-flush text-center">
+                                    <li class="list-group-item">{{$s->theme->nom}}</li>
+                                    @if(!empty($s->duree))
+                                        <li class="list-group-item">{{$s->duree}} minutes</li>
+                                    @endif
+                                    @if(!empty($s->nombre_joueurs))
+                                        <li class="list-group-item">{{$s->nombre_joueurs}} joueurs</li>
+                                    @endif
+                                    <li class="list-group-item"><a href="{{ route('jeu.show', ['jeu' => $s->id]) }}" class="btn btn-outline-primary">Voir le jeu</a></li>
+                                    <li class="list-group-item">
+                                        <div class="flex items-center justify-end mt-4 top-auto">
+                                            <form action="{{route('supprimerAchat',['jeu' => $s->id])}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" name="delete" value="valide"
+                                                        class=" bg-white text-red-500 px-2 py-2 rounded-md ">
+                                                    Supprimer le jeu de votre collection
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
         <br>
         <div class="row">
             <form action="{{route('ajouterAchat')}}" method="POST" name="formulaireAjoutAchat">
