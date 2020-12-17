@@ -25,11 +25,14 @@ class JeuController extends Controller
      */
     public function index(Request $request)
     {
-        $jeux = Jeu::all();
+        $pagination=15;
+        if (isset($request->pagination)){
+            $pagination=$request->pagination;
+        }
+        $jeux = DB::table('jeux')->paginate($pagination);
         $editeurs = Editeur::all();
         $themes = Theme::all();
         $mecaniques = Mecanique::all();
-
 
         if ($request->tri == "oui") {
             $jeux = Jeu::orderBy('nom')->get();
@@ -45,9 +48,8 @@ class JeuController extends Controller
             $jeux = Jeu::whereHas('mecaniques', function ($q) use ($mecanique_id) {
                 $q->where('id', $mecanique_id);
             })->get();
-
         }
-        return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques]);
+        return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques, 'pagination' => $pagination]);
     }
 
     /**
