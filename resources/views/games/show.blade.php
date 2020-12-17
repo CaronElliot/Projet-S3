@@ -91,7 +91,20 @@
                                     @foreach($commentaires as $comm)
                                         <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
                                             : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br> Note (sur
-                                            5) : {{$comm->note}} </li>
+                                            5) : {{$comm->note}}
+                                        @if($comm->user_id==\Illuminate\Support\Facades\Auth::id() || $data->user_id==\Illuminate\Support\Facades\Auth::id())
+                                            <div class="flex items-center justify-end mt-4 top-auto">
+                                                <form action="{{route('supprimerCommentaire',['com' => $comm->id])}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" name="delete" value="valide"
+                                                            class=" bg-white text-red-500 px-2 py-2 rounded-md ">
+                                                        Supprimer le commentaire
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
