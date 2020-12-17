@@ -90,8 +90,10 @@
                                 <ul style="padding: 0">
                                     @foreach($commentaires as $comm)
                                         <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
-                                            : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br> Note (sur
-                                            5) : {{$comm->note}}
+                                            : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br>
+                                            @for ($i = 0; $i <  $comm->note; $i++)
+                                                <i class="fas fa-star star-yellow"></i>
+                                            @endfor
                                         @if($comm->user_id==\Illuminate\Support\Facades\Auth::id() || $data->user_id==\Illuminate\Support\Facades\Auth::id())
                                             <div class="flex items-center justify-end mt-4 top-auto">
                                                 <form action="{{route('supprimerCommentaire',['com' => $comm->id])}}" method="POST">
