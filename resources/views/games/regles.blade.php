@@ -10,7 +10,7 @@
                         <hr>
                         <p>
                             @if(!empty($jeu->regles))
-                                {{$jeu->regles}}
+                                {!! $jeu->regles !!}
                             @endif
                         </p>
                         <hr>

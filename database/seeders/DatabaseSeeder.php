@@ -70,5 +70,26 @@ class DatabaseSeeder extends Seeder {
             'user_id' => $faker->randomElement($user_ids),
             'editeur_id' => $faker->randomElement($editeurs_ids),
         ]);
+
+        Jeu::factory()->create([
+            'nom' => 'Uno',
+            'regles' => 'Each player starts with 7 cards in hand. The goal of the game is to be the first player to have no cards left. In turn, players will place a card on the discard pile if the card visible on the discard pile has the same number or color.
+</br> If they cant play, they draw a card.
+</br> There are special cards like:
+</br> - the next player passes his turn
+</br> - the direction of the turn changes
+</br> - next player draws 2 or 4 cards
+</br> - the player chooses the colour of the next card placed
+</br> When a player has only one card he must say: "Uno".
+</br> Other players can say: "Counter-Uno" before, if this is the case, the player having only one card must draw 2.',
+            'langue' => 'En',
+            'url_media' => null,
+            'nombre_joueurs' => 6,
+            'duree' => '15',
+            'description' => 'A fast and dynamic game. Play with friends or families.',
+            'theme_id' => 3,
+            'user_id' => 6,
+            'editeur_id' => 20,
+        ]);
     }
 }
