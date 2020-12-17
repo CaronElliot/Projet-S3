@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-light bg-light">
+        <nav class="navbar sticky-top navbar-light bg-light mb-3">
             @guest
             <a class="navbar-brand" href="{{route('login')}}">Login</a>
             <a class="navbar-brand" href="{{route('register')}}">Register</a>
