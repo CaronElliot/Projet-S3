@@ -119,17 +119,17 @@ class JeuController extends Controller
     {
         $jeu = Jeu::find($id);
         $commentaires = Commentaire::all()->where('jeu_id', $id);
-        $moyPrix=0;
-        $minPrix=0;
-        $maxPrix=0;
+        $moyPrix = 0;
+        $minPrix = 0;
+        $maxPrix = 0;
         $nbUsersJeu = 0;
         $nbUsers = 0;
         $moyCom = 0;
         $maxCom = 0;
         $minCom = 0;
-        $nbCommJeu=0;
-        $nbComm=0;
-        $classement=0;
+        $nbCommJeu = 0;
+        $nbComm = 0;
+        $classement = 0;
 
         if ($r->tri == "oui") {
             $commentaires = Commentaire::orderBy('date_com', 'desc')->where('jeu_id', $id)->get();
@@ -148,9 +148,11 @@ class JeuController extends Controller
             $minCom = DB::table('commentaires')->where('jeu_id', $id)->min('note');
             $nbCommJeu = DB::table('commentaires')->where('jeu_id', $id)->count('note');
             $nbComm = DB::table('commentaires')->count('id');
-            $classementListe= DB::select("SELECT avg(note), jeu_id FROM commentaires GROUP BY jeu_id ORDER BY avg(note) DESC");
-            for($i = 0; $i < count($classementListe); $i++) {
-                if(print_r($classementListe[$i]->jeu_id, true) == $id) {
+            $listeJeux = DB::select("SELECT id FROM jeux WHERE theme_id=(SELECT theme_id from jeux where id='$id')");
+
+            $classementListe= DB::select("SELECT avg(note), jeu_id FROM commentaires WHERE jeu_id IN (SELECT id FROM jeux WHERE theme_id=(SELECT theme_id FROM jeux WHERE id = '$id')) GROUP BY jeu_id ORDER BY avg(note) DESC");
+            for ($i = 0; $i < count($classementListe); $i++) {
+                if (print_r($classementListe[$i]->jeu_id, true) == $id) {
                     $classement = $i + 1;
                     break;
                 } else {
@@ -158,8 +160,9 @@ class JeuController extends Controller
                 }
             }
         }
-        return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires,'moyCom'=>$moyCom,'maxCom'=>$maxCom,'minCom'=>$minCom,'nbCommJeu'=>$nbCommJeu,'nbComm'=>$nbComm,'classement'=>$classement,
-        'moyPrix'=>$moyPrix,'maxPrix'=>$maxPrix,'minPrix'=>$minPrix,'nbUsersJeu'=>$nbUsersJeu,'nbUsers'=>$nbUsers]);
+
+        return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires, 'moyCom' => $moyCom, 'maxCom' => $maxCom, 'minCom' => $minCom, 'nbCommJeu' => $nbCommJeu, 'nbComm' => $nbComm, 'classement' => $classement,
+            'moyPrix' => $moyPrix, 'maxPrix' => $maxPrix, 'minPrix' => $minPrix, 'nbUsersJeu' => $nbUsersJeu, 'nbUsers' => $nbUsers]);
     }
 
     /**
@@ -217,16 +220,17 @@ class JeuController extends Controller
     }
 
 
-
-    public function profil(){
-        $user_id=Auth::id();
-        $user =User::find($user_id);
-        $jeux=Jeu::all();
-        return view('games.profil',['user'=>$user, 'jeux' => $jeux]);
+    public function profil()
+    {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $jeux = Jeu::all();
+        return view('games.profil', ['user' => $user, 'jeux' => $jeux]);
     }
 
-    public function ajouterAchat(Request $r){
-        $jeu=Jeu::find($r->jeu);
+    public function ajouterAchat(Request $r)
+    {
+        $jeu = Jeu::find($r->jeu);
 
         $jeu->acheteurs()->attach(Auth::id(), [
             'lieu' => $r->lieu,
