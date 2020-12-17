@@ -1,6 +1,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Marathon du Web 2020- IUT de Lens</title>
+    <title>Game Boost</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
     <!-- http://usewing.ml -->
