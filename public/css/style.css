@@ -10,6 +10,11 @@
     color: white;
 }
 
+.nom-jeu-vert{
+    background: linear-gradient(to right, #86D0A0, #358952);
+    color: white;
+}
+
 .btn-orange-outline:active {
     transform: translateY(-1px);
     box-shadow: 0 10px 3px rgba(0, 0, 0, .3);
@@ -58,6 +63,10 @@
     color: #FFAF08;
 }
 
+.star-yellow:hover{
+    color: #FF792F;
+}
+
 .list-custom {
     list-style: none;
 }
@@ -103,6 +112,7 @@
     background-image: linear-gradient(to right, #7ed56f, #28b485);
     -webkit-background-clip: text;
 }
+
 .footer {
     border-top: 1px solid black;
 }

@@ -13,6 +13,11 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+hr{
+    max-width: 50px;
+    border-width: 3px;}
+
+
 /* Sections
    ========================================================================== */
 

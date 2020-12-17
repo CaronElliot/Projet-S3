@@ -1,6 +1,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Marathon du Web 2020- IUT de Lens</title>
+    <title>Game Boost</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
     <!-- http://usewing.ml -->
@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-light bg-light">
+        <nav class="navbar sticky-top navbar-light bg-light mb-3">
             @guest
             <a class="navbar-brand" href="{{route('login')}}">Login</a>
             <a class="navbar-brand" href="{{route('register')}}">Register</a>
@@ -35,6 +35,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/5804eadeb7.js" crossorigin="anonymous"></script>
+    <script src="assets/popper.js"></script>
 </body>
 
 </html>
