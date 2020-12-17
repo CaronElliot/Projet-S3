@@ -29,6 +29,8 @@ class JeuController extends Controller
         $editeurs = Editeur::all();
         $themes = Theme::all();
         $mecaniques = Mecanique::all();
+
+
         if ($request->tri == "oui") {
             $jeux = Jeu::orderBy('nom')->get();
         }
@@ -148,7 +150,6 @@ class JeuController extends Controller
             $minCom = DB::table('commentaires')->where('jeu_id', $id)->min('note');
             $nbCommJeu = DB::table('commentaires')->where('jeu_id', $id)->count('note');
             $nbComm = DB::table('commentaires')->count('id');
-            $listeJeux = DB::select("SELECT id FROM jeux WHERE theme_id=(SELECT theme_id from jeux where id='$id')");
 
             $classementListe= DB::select("SELECT avg(note), jeu_id FROM commentaires WHERE jeu_id IN (SELECT id FROM jeux WHERE theme_id=(SELECT theme_id FROM jeux WHERE id = '$id')) GROUP BY jeu_id ORDER BY avg(note) DESC");
             for ($i = 0; $i < count($classementListe); $i++) {

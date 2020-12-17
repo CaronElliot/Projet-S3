@@ -11,11 +11,37 @@
         @endif
     </div>
 
-    <a href="{{route('test')}}">Carte des jeux</a>
+    <a href="{{route('test')}}">Carte des jeux</a><br>
 
     @auth
+        <a href="{{route('accueil',['triggermeilleurs'=>'oui'])}}">Affichage des 5 meilleurs jeux</a><br>
         <a href="{{route('accueil')}}">Choix de 5 jeux aléatoires</a>
-        @if(!empty($data))
+        @if(!empty($meilleursJeux))
+            <div class="container">
+                <div class="row d-flex justify-content-around">
+                    @foreach($meilleursJeux as $jeu)
+                        <div class="col-lg-4 col-md-6 col-sm-12 my-3 shadow">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    {{$jeu->nom}}
+                                </li>
+                                <li class="list-group-item">
+                                    {{$jeu->editeur->nom}}
+                                </li>
+                                <li class="list-group-item">
+                                    {{$jeu->description}}
+                                </li>
+                                <li class="list-group-item">
+                                    {{$jeu->theme->nom}}
+                                </li>
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        @if(!empty($data) and empty($meilleursJeux))
             <div class="container">
                 <div class="row d-flex justify-content-around">
                     @foreach($data as $jeu)
@@ -38,8 +64,7 @@
                     @endforeach
                 </div>
             </div>
-        @else
-            <h1>marche pas</h1>
         @endif
+
     @endauth
 @endsection
