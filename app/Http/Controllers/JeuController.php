@@ -177,12 +177,18 @@ class JeuController extends Controller
         return redirect()->route('jeu.show',['jeu'=>$r->idJeu]);
     }
 
-
     public function profil(){
-        $user_id=Auth::id();
-        $user =User::find($user_id);
-        $jeux=Jeu::all();
-        return view('games.profil',['user'=>$user, 'jeux' => $jeux]);
+        if(Auth::check()) {
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+            $jeux = Jeu::all();
+            $jeuxUser = Jeu::whereHas('acheteurs', function ($q) use ($user_id) {
+                $q->where('user_id', $user_id);
+            })->get();
+
+            return view('games.profil', ['user' => $user, 'jeux' => $jeux, 'jeuxUser' => $jeuxUser]);
+        }
+        return redirect()->route('jeu.index');
     }
 
     public function ajouterAchat(Request $r){
@@ -194,6 +200,13 @@ class JeuController extends Controller
             'date_achat' => $r->date_achat]);
 
         $jeu->save();
+
+        return redirect()->route('profil');
+    }
+
+    public function supprimerAchat(Request $r){
+        $user_id=Auth::id();
+        DB::table('achats')->where('jeu_id','=', $r->jeu)->where('user_id','=', $user_id)->delete();
 
         return redirect()->route('profil');
     }
