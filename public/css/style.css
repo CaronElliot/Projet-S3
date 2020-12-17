@@ -10,6 +10,11 @@
     color: white;
 }
 
+.nom-jeu-vert{
+    background: linear-gradient(to right, #86D0A0, #358952);
+    color: white;
+}
+
 .btn-orange-outline:active {
     transform: translateY(-1px);
     box-shadow: 0 10px 3px rgba(0, 0, 0, .3);
@@ -56,6 +61,10 @@
 
 .star-yellow {
     color: #FFAF08;
+}
+
+.star-yellow:hover{
+    color: #FF792F;
 }
 
 .list-custom {
