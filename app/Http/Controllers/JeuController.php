@@ -25,9 +25,10 @@ class JeuController extends Controller
      */
     public function index(Request $request)
     {
-        $pagination=15;
-        if (isset($request->pagination)){
-            $pagination=$request->pagination;
+        $str = "pasTri";
+        $pagination = 15;
+        if (isset($request->pagination)) {
+            $pagination = $request->pagination;
         }
         $jeux = DB::table('jeux')->paginate($pagination);
         $editeurs = Editeur::all();
@@ -35,7 +36,11 @@ class JeuController extends Controller
         $mecaniques = Mecanique::all();
 
         if ($request->tri == "oui") {
-            $jeux = Jeu::orderBy('nom')->get();
+            if (isset($request->pagination)) {
+                $pagination = $request->pagination;
+            }
+            $str = "tri";
+            $jeux = DB::table('jeux')->orderBy('nom')->paginate($pagination);
         }
         if (isset($request->editeur)) {
             $jeux = Jeu::all()->where('editeur_id', $request->editeur);
@@ -49,8 +54,9 @@ class JeuController extends Controller
                 $q->where('id', $mecanique_id);
             })->get();
 
-            if (isset($request->langue)) {
-                $jeux = $jeux->where('langue', $request->langue);
+
+            if (isset($request->nbJoueurs)) {
+                $jeux = $jeux->where('langue', $request->nbJoueurs);
             }
             if (isset($request->duree)) {
                 $jeux = $jeux->where('duree', $request->duree);
@@ -58,9 +64,10 @@ class JeuController extends Controller
             if (isset($request->langue)) {
                 $jeux = $jeux->where('langue', $request->langue);
             }
+        }
+        return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques, 'pagination' => $pagination, 'str' => $str]);
     }
-        return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques, 'pagination' => $pagination]);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -163,7 +170,7 @@ class JeuController extends Controller
             $nbCommJeu = DB::table('commentaires')->where('jeu_id', $id)->count('note');
             $nbComm = DB::table('commentaires')->count('id');
 
-            $classementListe= DB::select("SELECT avg(note), jeu_id FROM commentaires WHERE jeu_id IN (SELECT id FROM jeux WHERE theme_id=(SELECT theme_id FROM jeux WHERE id = '$id')) GROUP BY jeu_id ORDER BY avg(note) DESC");
+            $classementListe = DB::select("SELECT avg(note), jeu_id FROM commentaires WHERE jeu_id IN (SELECT id FROM jeux WHERE theme_id=(SELECT theme_id FROM jeux WHERE id = '$id')) GROUP BY jeu_id ORDER BY avg(note) DESC");
             for ($i = 0; $i < count($classementListe); $i++) {
                 if (print_r($classementListe[$i]->jeu_id, true) == $id) {
                     $classement = $i + 1;
@@ -232,8 +239,9 @@ class JeuController extends Controller
         return redirect()->route('jeu.show', ['jeu' => $r->idJeu]);
     }
 
-    public function profil(){
-        if(Auth::check()) {
+    public function profil()
+    {
+        if (Auth::check()) {
             $user_id = Auth::id();
             $user = User::find($user_id);
             $jeux = Jeu::all();
@@ -260,9 +268,10 @@ class JeuController extends Controller
         return redirect()->route('profil');
     }
 
-    public function supprimerAchat(Request $r){
-        $user_id=Auth::id();
-        DB::table('achats')->where('jeu_id','=', $r->jeu)->where('user_id','=', $user_id)->delete();
+    public function supprimerAchat(Request $r)
+    {
+        $user_id = Auth::id();
+        DB::table('achats')->where('jeu_id', '=', $r->jeu)->where('user_id', '=', $user_id)->delete();
 
         return redirect()->route('profil');
     }
