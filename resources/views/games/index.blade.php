@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('body')
-    <a href="{{ route('jeu.index', ['tri' => 'oui']) }}" class="btn btn-outline-secondary">Trier</a>
+    <a href="{{ route('jeu.index', ['tri' => 'oui', 'pagination' => $pagination]) }}" class="btn btn-outline-secondary">Trier</a>
     <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
         <select name="editeur"
                 class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
@@ -41,6 +41,7 @@
             type="submit">Valider
         </button>
     </form>
+
     <div class="container">
         @if(!empty($data))
             <div class="row">
@@ -80,19 +81,33 @@
                                 class=" bg-white text-red-500 px-2 py-2 rounded-md ">
                             25
                         </button>
-                        @if($data->currentpage()!=1)
-                            <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())-1, 'pagination' => $pagination])}}">
-                                Précédent
-                            </a>
-                        @endif
-                        @if($data->currentpage()<$data->lastPage())
-                            <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())+1, 'pagination' => $pagination])}}">
-                                Suivant
-                            </a>
+                        @if($str=="tri")
+                            @if($data->currentpage()!=1)
+                                <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())-1, 'pagination' => $pagination, 'tri' => 'oui'])}}">
+                                    Précédent
+                                </a>
+                            @endif
+                            @if($data->currentpage()<$data->lastPage())
+                                <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())+1, 'pagination' => $pagination, 'tri' => 'oui'])}}">
+                                    Suivant
+                                </a>
+                            @endif
+                        @else
+                            @if($data->currentpage()!=1)
+                                <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())-1, 'pagination' => $pagination])}}">
+                                    Précédent
+                                </a>
+                            @endif
+                            @if($data->currentpage()<$data->lastPage())
+                                <a class="mx-1" href="{{route('jeu.index', ['page' => ($data->currentpage())+1, 'pagination' => $pagination])}}">
+                                    Suivant
+                                </a>
+                            @endif
                         @endif
                     </form>
                 </div>
             </div>
         @endif
     </div>
+
 @endsection
