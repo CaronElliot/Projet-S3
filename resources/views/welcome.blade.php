@@ -14,8 +14,8 @@
         <a class="btn btn-outline-warning rounded-pill" href="{{url('/jeu')}}">Liste des jeux</a>
         @auth
             <a class="btn btn-outline-warning rounded-pill" href="{{route('accueil')}}">Choix de 5 jeux aléatoires</a>
+        @endauth
     </div>
-        @if(!empty($data))
 
     <a href="{{route('test')}}">Carte des jeux</a><br>
 
