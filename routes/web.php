@@ -34,3 +34,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/jeu/{id}/regles', [\App\Http\Controllers\JeuController::class, 'regles'])->name('jeu.regles');
 
 Route::get('/profil',[\App\Http\Controllers\JeuController::class,'profil'])->name('profil');
+
+Route::get('/logout',[\App\Http\Controllers\LoginController::class,'logout'])->name('logout');

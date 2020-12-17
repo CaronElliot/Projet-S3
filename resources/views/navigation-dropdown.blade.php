@@ -11,11 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -41,22 +37,79 @@
 
                     <x-slot name="content">
                         <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Account') }}
-                        </div>
 
-                        <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                            {{ __('Profile') }}
-                        </x-jet-dropdown-link>
+                        <a class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="http://127.0.0.1:8000/profil">Détail du profil</a>
 
-                        @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                            <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                {{ __('API Tokens') }}
-                            </x-jet-dropdown-link>
-                        @endif
+
 
                         <div class="border-t border-gray-100"></div>
 
+                        <!-- Team Management -->
+
+                        <!-- Authentication -->
+                        <form method="POST" action="http://127.0.0.1:8000/logout">
+                            <input type="hidden" name="_token" value="eeusNEokZ2pFyMx2S2iA0oO645NLSHM8nCw1Hat6">
+                            <a class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();
+                                                            this.closest('form').submit();">Logout</a>
+
+                        </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Hamburger -->
+    <div class="-mr-2 flex items-center sm:hidden">
+        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    </div>
+    </div>
+
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <a class="block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out" href="http://127.0.0.1:8000/dashboard">
+                Dashboard
+            </a>
+
+        </div>
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="flex items-center px-4">
+                <div class="flex-shrink-0">
+                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=test&amp;color=7F9CF5&amp;background=EBF4FF" alt="test" />
+                </div>
+
+                <div class="ml-3">
+                    <div class="font-medium text-base text-gray-800">test</div>
+                    <div class="font-medium text-sm text-gray-500">test@laravel.com</div>
+                </div>
+            </div>
+
+            <div class="mt-3 space-y-1">
+                <!-- Account Management -->
+                <a class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out" href="http://127.0.0.1:8000/user/profile">
+                    Profile
+                </a>
+
+
+
+                <!-- Authentication -->
+                <form method="POST" action="http://127.0.0.1:8000/logout">
+                    <input type="hidden" name="_token" value="eeusNEokZ2pFyMx2S2iA0oO645NLSHM8nCw1Hat6">
+                    <a class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out" href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                        Logout
+                    </a>
+
+                </form>
                         <!-- Team Management -->
                         @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                             <div class="block px-4 py-2 text-xs text-gray-400">
