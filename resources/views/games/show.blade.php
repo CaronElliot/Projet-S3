@@ -53,11 +53,11 @@
                                     </li>
                                     <li class="list-group-item">Min : {{$minCom}}<br>
                                     </li>
-                                    <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbCommJeu}}<br>
+                                    <li class="list-group-item">Nombre de commentaires sur le jeu : {{$nbCommJeu}}<br>
                                     </li>
-                                    <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbComm}}<br>
+                                    <li class="list-group-item">Nombre de commentaires sur le site : {{$nbComm}}<br>
                                     </li>
-                                    <li class="list-group-item">Classement du jeu : {{$classement}}<br>
+                                    <li class="list-group-item">Classement du jeu dans son thème : {{$classement}}<br>
                                     </li>
 
                                 </ul>
