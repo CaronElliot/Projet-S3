@@ -215,7 +215,6 @@ class JeuController extends Controller
 
     public function commentaire(Request $r)
     {
-
         $comm = new Commentaire();
         $comm->commentaire = $r->commentaire;
         $comm->user_id = Auth::id();
@@ -225,6 +224,16 @@ class JeuController extends Controller
         $comm->save();
 
         return redirect()->route('jeu.show', ['jeu' => $r->idJeu]);
+    }
+
+    public function supprimerCommentaire(Request $r){
+        $c = Commentaire::find($r->com);
+        $id_jeu = $c->jeu_id;
+
+        DB::table('commentaires')->where('id','=', $r->com)->delete();
+
+
+        return redirect()->route('jeu.show', ['jeu' => $id_jeu]);
     }
 
     public function profil(){

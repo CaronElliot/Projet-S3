@@ -28,6 +28,7 @@ Route::post('/ajouterAchat', [\App\Http\Controllers\JeuController::class, 'ajout
 Route::resource('jeu', \App\Http\Controllers\JeuController::class);
 
 Route::delete('/supprimerAchat', [\App\Http\Controllers\JeuController::class, 'supprimerAchat'])->name('supprimerAchat');
+Route::delete('/supprimerCommentaire', [\App\Http\Controllers\JeuController::class, 'supprimerCommentaire'])->name('supprimerCommentaire');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
