@@ -1,0 +1,109 @@
+.btn-orange-outline {
+    border: 1px solid rgba(255, 153, 23, .6);
+    transition: all .4s;
+}
+
+.btn-orange-outline:hover {
+    background: linear-gradient(to right, #FFAF08, #ef6013);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, .3);
+    color: white;
+}
+
+.btn-orange-outline:active {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 3px rgba(0, 0, 0, .3);
+}
+
+.card-welcome {
+    box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+    transition: all .3s;
+}
+
+.card-welcome:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .3);
+    transform: scale(1.1);
+    z-index: 8;
+}
+
+.btn-vert {
+    border: 1px solid rgba(79, 187, 116, .6);
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+    background: linear-gradient(to right, #86D0A0, #358952);
+    color: white;
+    transition: all .4s;
+}
+
+.btn-vert:hover {
+    color: white !important;
+}
+
+.btn-vert-outline {
+    border: 1px solid rgba(79, 187, 116, .6);
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+    transition: all .4s;
+}
+
+.btn-vert-outline:hover {
+    background: linear-gradient(to right, #86D0A0, #358952);
+    color: white;
+}
+
+.btn-vert-outline:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+}
+
+.star-yellow {
+    color: #FFAF08;
+}
+
+.list-custom {
+    list-style: none;
+}
+
+.list-custom li:not(:last-child):after {
+    content: "";
+    display: block;
+    margin: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,.6);
+}
+
+.avatar-border {
+    border: 1px solid black;
+    width: 90px;
+}
+
+.commentaire-block {
+    border: 1px solid black;
+}
+
+.space-comment {
+    border-bottom: 1px solid black;
+}
+
+.commentaire-border {
+    border: 1px solid grey;
+    height: 80px;
+}
+
+.commentaire-border:active {
+    border: 1px solid green;
+}
+
+.commentaire:not(:last-child) .commentaire-content {
+    border-bottom: 1px solid black;
+}
+
+.profil-div {
+    border: 1px solid rgba(0,0,0,.2);
+}
+
+.orange {
+    background-image: linear-gradient(to right, #7ed56f, #28b485);
+    -webkit-background-clip: text;
+}
+.footer {
+    border-top: 1px solid black;
+}
+
