@@ -15,7 +15,7 @@
             type="submit">Valider
         </button>
     </form>
-    <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
+    <form action="{{route('jeu.index',['pagination' => $pagination])}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
         <select name="theme"
                 class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
             <option value="">Choisir un thème</option>

@@ -43,26 +43,53 @@ class JeuController extends Controller
             $jeux = DB::table('jeux')->orderBy('nom')->paginate($pagination);
         }
         if (isset($request->editeur)) {
-            $jeux = Jeu::all()->where('editeur_id', $request->editeur);
+            if (isset($request->pagination)) {
+                $pagination = $request->pagination;
+            }
+            $str = "tri";
+            $jeux = DB::table('jeux')->where('editeur_id', $request->editeur)->paginate($pagination);
         }
         if (isset($request->theme)) {
-            $jeux = Jeu::all()->where('theme_id', $request->theme);
+            if (isset($request->pagination)) {
+                $pagination = $request->pagination;
+            }
+            $str = "tri";
+            $jeux = DB::table('jeux')->where('theme_id', $request->theme)->paginate($pagination);
         }
         if (isset($request->mecanique)) {
+            if (isset($request->pagination)) {
+                $pagination = $request->pagination;
+            }
             $mecanique_id = $request->mecanique;
-            $jeux = Jeu::whereHas('mecaniques', function ($q) use ($mecanique_id) {
-                $q->where('id', $mecanique_id);
-            })->get();
-
-
-            if (isset($request->nbJoueurs)) {
-                $jeux = $jeux->where('langue', $request->nbJoueurs);
+            $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->paginate($pagination);
+            $str = "tri";
+            //Tous
+            if ((isset($request->nbJoueurs)) && (isset($request->duree)) && (isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('nombre_joueurs',$request->nbJoueurs)->where('duree', $request->duree)->where('langue', $request->langue)->paginate($pagination);
             }
-            if (isset($request->duree)) {
-                $jeux = $jeux->where('duree', $request->duree);
+            //nbJoueurs + durée
+            elseif ((isset($request->nbJoueurs)) && (isset($request->duree)) && !(isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('nombre_joueurs',$request->nbJoueurs)->where('duree', $request->duree)->paginate($pagination);
             }
-            if (isset($request->langue)) {
-                $jeux = $jeux->where('langue', $request->langue);
+            //nbJoueurs
+            elseif ((isset($request->nbJoueurs)) && !(isset($request->duree)) && !(isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('nombre_joueurs',$request->nbJoueurs)->paginate($pagination);
+            }
+            //nbJoueurs + langue
+            elseif ((isset($request->nbJoueurs)) && !(isset($request->duree)) && (isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('nombre_joueurs',$request->nbJoueurs)->where('langue', $request->langue)->paginate($pagination);
+            }
+            //durée + langue
+            elseif (!(isset($request->nbJoueurs)) && (isset($request->duree)) && (isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('duree', $request->duree)->where('langue', $request->langue)->paginate($pagination);
+            }
+            //duree
+            elseif (!(isset($request->nbJoueurs)) && (isset($request->duree)) && !(isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('duree', $request->duree)->paginate($pagination);
+            }
+            //langue
+            elseif (!(isset($request->nbJoueurs)) && !(isset($request->duree)) && (isset($request->langue))){
+                $jeux = DB::table('jeux')->whereIn('id',DB::table('avec_mecaniques')->where('mecanique_id','=', $mecanique_id)->pluck('jeu_id'))->where('langue',$request->langue)->paginate($pagination);
             }
         }
         return view("games.index", ['data' => $jeux, 'editeurs' => $editeurs, 'themes' => $themes, 'mecaniques' => $mecaniques, 'pagination' => $pagination, 'str' => $str]);
