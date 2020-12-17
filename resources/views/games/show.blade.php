@@ -48,12 +48,30 @@
                             <div>
                                 <ul style="padding: 0">
                                     <li class="list-group-item">Moyenne : {{$moyCom}}<br>
+                                        @if(100-(($moyCom/5)*100) < ($moyCom/5)*100)
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 100%;
+                                            background: rgb(190,49,49);
+                                            background: linear-gradient(90deg, rgba(190,49,49,1) 0%, rgba(59,179,48,1) {{100-(($moyCom/5)*100)}}%);" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        @endif
+                                        @if(100-(($moyCom/5)*100) > ($moyCom/5)*100)
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%;
+                                                    background: rgb(190,49,49);
+                                                    background: linear-gradient(90deg, rgba(190,49,49,1) {{100-(($moyCom/5)*100)}}%, rgba(59,179,48,1) 100%);" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        @endif
+
+
                                     </li>
+
                                     <li class="list-group-item">Max : {{$maxCom}}<br>
                                     </li>
                                     <li class="list-group-item">Min : {{$minCom}}<br>
                                     </li>
                                     <li class="list-group-item">Nombre de commentaires sur le jeu : {{$nbCommJeu}}<br>
+
                                     </li>
                                     <li class="list-group-item">Nombre de commentaires sur le site : {{$nbComm}}<br>
                                     </li>
@@ -75,12 +93,49 @@
                                     </div>
                                     <div style="margin-left: {{(($moyPrix/$maxPrix)*100)-1}}%;">
                                         <img src="{{url('./images/fleche.gif')}}" width="20px" class="img-fluid">
-                                        {{$moyPrix}}
+                                        {{round($moyPrix,2)}}
                                     </div>
 
                                 </div>
                             </div>
                             <div>
+
+                                <div style="float: left;">Min</div>
+                                <div style="float: right;">Max</div>
+                            </div>
+
+                        @endif
+                    </div>
+                    @if(!empty($moyPrix))
+                        <div>
+                            <ul style="padding: 0">
+                                <li class="list-group-item">Moyenne : {{$moyPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Max : {{$maxPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Min : {{$minPrix}}<br>
+                                </li>
+                                <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}
+                                    <div class="progress-circle" data-value="{{round(($nbUsersJeu/$nbUsers)*100)}}">
+                                        <div class="progress-masque">
+                                            <div class="progress-barre"></div>
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </li>
+                                <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
+                                </li>
+
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if(!empty($commentaires))
+                        <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}"
+                           class="btn btn-outline-secondary">Trier</a>
+                        <div>
+                            <ul style="padding: 0">
                                 <ul style="padding: 0">
                                     @foreach($commentaires as $comm)
                                         <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
@@ -105,46 +160,6 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <div style="float: left;">Min</div>
-                                <div style="float: right;">Max</div>
-                            </div>
-
-                        @endif
-                    </div>
-                    @if(!empty($moyPrix))
-                        <div>
-                            <ul style="padding: 0">
-                                <li class="list-group-item">Moyenne : {{$moyPrix}}<br>
-                                </li>
-                                <li class="list-group-item">Max : {{$maxPrix}}<br>
-                                </li>
-                                <li class="list-group-item">Min : {{$minPrix}}<br>
-                                </li>
-                                <li class="list-group-item">Nombre d'utilisateurs possédant le jeu
-                                    : {{$nbUsersJeu}}
-                                    <div class="progress-circle" data-value="40">
-
-                                    </div>
-                                    <br>
-                                </li>
-                                <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
-                                </li>
-
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if(!empty($commentaires))
-                        <a href="{{ route('jeu.show',['jeu'=>$data->id,'tri'=>'oui']) }}"
-                           class="btn btn-outline-secondary">Trier</a>
-                        <div>
-                            <ul style="padding: 0">
-                                @foreach($commentaires as $comm)
-                                    <li class="list-group-item">Auteur : {{$comm->user->name}}<br> Date
-                                        : {{$comm->date_com}}<br> Commentaire : {{$comm->commentaire}}<br> Note
-                                        (sur
-                                        5) : {{$comm->note}} </li>
-                                @endforeach
                             </ul>
                         </div>
                     @endif
