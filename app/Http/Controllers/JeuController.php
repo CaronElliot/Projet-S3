@@ -119,23 +119,42 @@ class JeuController extends Controller
     {
         $jeu = Jeu::find($id);
         $commentaires = Commentaire::all()->where('jeu_id', $id);
-        $moyenne = 0;
-        $max = 0;
-        $min = 0;
+        $moyPrix=0;
+        $minPrix=0;
+        $maxPrix=0;
         $nbUsersJeu = 0;
         $nbUsers = 0;
+        $moyCom = 0;
+        $maxCom = 0;
+        $minCom = 0;
+        $nbCommJeu=0;
+        $nbComm=0;
+        $classement=0;
+
         if ($r->tri == "oui") {
             $commentaires = Commentaire::orderBy('date_com', 'desc')->where('jeu_id', $id)->get();
         }
         if ($r->triggerinfo == "oui") {
-            $moyenne = DB::table('achats')->where('jeu_id', $id)->avg('prix');
-            $max = DB::table('achats')->where('jeu_id', $id)->max('prix');
-            $min = DB::table('achats')->where('jeu_id', $id)->min('prix');
+            $moyPrix = DB::table('achats')->where('jeu_id', $id)->avg('prix');
+            $maxPrix = DB::table('achats')->where('jeu_id', $id)->max('prix');
+            $minPrix = DB::table('achats')->where('jeu_id', $id)->min('prix');
             $nbUsersJeu = DB::table('achats')->where('jeu_id', $id)->count('prix');
             $nbUsers = DB::table('users')->count('id');
         }
 
-        return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires,'moyenne'=>$moyenne,'max'=>$max,'min'=>$min,'nbUsersJeu'=>$nbUsersJeu,'nbUsers'=>$nbUsers]);
+        if ($r->triggerstats == "oui") {
+            $moyCom = DB::table('commentaires')->where('jeu_id', $id)->avg('note');
+            $maxCom = DB::table('commentaires')->where('jeu_id', $id)->max('note');
+            $minCom = DB::table('commentaires')->where('jeu_id', $id)->min('note');
+            $nbCommJeu = DB::table('commentaires')->where('jeu_id', $id)->count('note');
+            $nbComm = DB::table('commentaires')->count('id');
+            $classementListe=DB::select(DB::raw("SELECT avg(note), jeu_id FROM commentaires GROUP BY jeu_id ORDER BY avg(note)"));
+            $classement=array_search($id,$classementListe);
+            if ($classement===false) $classement=0;
+        }
+
+        return view('games.show', ['data' => $jeu, 'commentaires' => $commentaires,'moyCom'=>$moyCom,'maxCom'=>$maxCom,'minCom'=>$minCom,'nbCommJeu'=>$nbCommJeu,'nbComm'=>$nbComm,'classement'=>$classement,
+        'moyPrix'=>$moyPrix,'maxPrix'=>$maxPrix,'minPrix'=>$minPrix,'nbUsersJeu'=>$nbUsersJeu,'nbUsers'=>$nbUsers]);
     }
 
     /**

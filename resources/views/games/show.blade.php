@@ -42,24 +42,45 @@
                                 </form>
                             </div>
                         @endauth
-                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
-                               class="btn btn-outline-secondary">Infos tarifaires</a>
-                            @if(!empty($moyenne))
+                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerstats'=>'oui']) }}"
+                               class="btn btn-outline-secondary">Infos statistiques</a>
+                            @if(!empty($moyCom))
                             <div>
                                 <ul style="padding: 0">
-                                    <li class="list-group-item">Moyenne : {{$moyenne}}<br>
+                                    <li class="list-group-item">Moyenne : {{$moyCom}}<br>
                                     </li>
-                                    <li class="list-group-item">Max : {{$max}}<br>
+                                    <li class="list-group-item">Max : {{$maxCom}}<br>
                                     </li>
-                                    <li class="list-group-item">Min : {{$min}}<br>
+                                    <li class="list-group-item">Min : {{$minCom}}<br>
                                     </li>
-                                    <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}<br>
+                                    <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbCommJeu}}<br>
                                     </li>
-                                    <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
+                                    <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbComm}}<br>
+                                    </li>
+                                    <li class="list-group-item">Classement du jeu : {{$classement}}<br>
                                     </li>
 
                                 </ul>
                             </div>
+                            @endif
+                            <a href="{{ route('jeu.show',['jeu'=>$data->id,'triggerinfo'=>'oui']) }}"
+                               class="btn btn-outline-secondary">Infos tarifaires</a>
+                            @if(!empty($moyPrix))
+                                <div>
+                                    <ul style="padding: 0">
+                                        <li class="list-group-item">Moyenne : {{$moyPrix}}<br>
+                                        </li>
+                                        <li class="list-group-item">Max : {{$maxPrix}}<br>
+                                        </li>
+                                        <li class="list-group-item">Min : {{$minPrix}}<br>
+                                        </li>
+                                        <li class="list-group-item">Nombre d'utilisateurs possédant le jeu : {{$nbUsersJeu}}<br>
+                                        </li>
+                                        <li class="list-group-item">Nombre d'utilisateurs du site : {{$nbUsers}}<br>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             @endif
 
                         @if(!empty($commentaires))
