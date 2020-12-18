@@ -6,6 +6,9 @@
             <div class="col-lg-3 col-sm-12">
                 <div class="sticky-top">
                     <a href="{{ route('jeu.index', ['tri' => 'oui', 'pagination' => $pagination]) }}" class="btn btn-orange-outline rounded-pill">Trier</a>
+                    @auth
+                        <a href="{{ route('jeu.create') }}" class="btn btn-orange-outline rounded-pill">Créer un nouveau jeu</a>
+                    @endauth
                     <form action="{{route('jeu.index')}}" method="get" class="mt-6 border-t border-gray-400 pt-4">
                         <select name="editeur"
                                 class="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
