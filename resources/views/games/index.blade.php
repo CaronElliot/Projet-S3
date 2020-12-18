@@ -5,10 +5,12 @@
         <div class="row">
             <div class="col-lg-3 col-sm-12">
                 <div class="sticky-top text-center ml-3">
-                    <a href="{{ route('jeu.index', ['tri' => 'oui', 'pagination' => $pagination]) }}" class="btn btn-orange-outline rounded-pill mb-3">Trier</a>
-                    @auth
-                        <a href="{{ route('jeu.create') }}" class="btn btn-orange-outline rounded-pill">Créer un nouveau jeu</a>
-                    @endauth
+                    <ul>
+                        <li class="list-group"><a href="{{ route('jeu.index', ['tri' => 'oui', 'pagination' => $pagination]) }}" class="btn btn-orange-outline rounded-pill mb-3">Trier</a></li>
+                        @auth
+                            <li class="list-group"><a href="{{ route('jeu.create') }}" class="btn btn-orange-outline rounded-pill">Créer un nouveau jeu</a></li>
+                        @endauth
+                    </ul>
                     <form action="{{route('jeu.index')}}" method="get">
                         <div class="form-group">
                             <select name="editeur"
