@@ -8,11 +8,11 @@
             </div>
         @endif
     </div>
-    <h1>Game Boost</h1>
+    <h1 class="text-center">Game Boost</h1>
     <br/>
         <div class="text-center mb-3">
             <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
+                <li class="nav-item ml-3">
                     <a class="nav-link bg-warning rounded"  href="{{url('/jeu')}}">Liste des jeux</a>
                 </li>
                 <li class="nav-item">

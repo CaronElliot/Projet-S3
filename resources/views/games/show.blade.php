@@ -9,7 +9,6 @@
                                 @if(!empty($data->url_media))
                                     <img src={{$data->url_media}} alt="" class="card-img-top">
                                 @endif
-<<<<<<< HEAD
                                 <div class="card-body">
                                     <h5 class="card-title text-center nom-jeu-vert">{{$data->nom}}</h5>
                                     <ul class="list-group list-group-flush text-center">
